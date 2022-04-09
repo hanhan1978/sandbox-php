@@ -8,11 +8,13 @@ if(!socket_bind($sock, '127.0.0.1', 8080) || !socket_listen($sock, 0)){
 }
 
 $pids = [];
-foreach(range(0,1) as $i){ //２つの子プロセスを作成する
+foreach(range(0,12) as $i){ //２つの子プロセスを作成する
     $pid = pcntl_fork();
     if($pid === 0){ //子プロセスの場合
         while(true) {
             $client_sock = socket_accept($sock);
+            if(!$client_sock) continue;
+            socket_set_nonblock($client_sock);
             $res = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 15\r\n\r\n{\"status\":\"OK\"}\n";
             socket_write($client_sock, $res);
             socket_close($client_sock);

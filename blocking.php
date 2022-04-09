@@ -14,6 +14,7 @@ while (true) {
     //client からの文字入力を待つ (block)
     $buf = socket_read($client_socket, 1024);
     if($buf && strlen($buf) > 0) {
+
         $res =  "HTTP/1.1 200 OK\r\nConnection: close\r\n";
         $res .= "Content-Length: 15\r\n\r\n{\"status\":\"OK\"}\n";
         socket_write($client_socket, $res);
