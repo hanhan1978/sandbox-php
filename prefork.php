@@ -2,15 +2,13 @@
 $sock = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 socket_set_option($sock, SOL_SOCKET, SO_REUSEADDR, 1);
 socket_set_nonblock($sock);
-
 if(!socket_bind($sock, '0.0.0.0', 8080) || !socket_listen($sock, 0)){
     die("port in use\n");
 }
-
 $pids = [];
-foreach(range(0,6) as $i){ //２つの子プロセスを作成する
+foreach(range(0,6) as $i){
     $pid = pcntl_fork();
-    if($pid === 0){ //子プロセスの場合
+    if($pid === 0){
         while(true) {
             $client_sock = socket_accept($sock);
             if(!$client_sock) continue;
@@ -20,12 +18,11 @@ foreach(range(0,6) as $i){ //２つの子プロセスを作成する
             socket_close($client_sock);
         }
     }else{
-        //親プロセスの場合は、pidを収集
         $pids[] = $pid;
     }
 }
-
 foreach($pids as $pid){
-    //親側のプロセスは、子プロセスの状態を監視する（ここで処理はBlockする）
     pcntl_waitpid($pid, $status);
 }
+
+
