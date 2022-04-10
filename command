@@ -1,0 +1,1 @@
+docker run -v /home/hanhan/dev/sandbox-php/dummy-api-nginx/default.conf:/etc/nginx/conf.d/default.conf -p 8080:80 --rm nginx

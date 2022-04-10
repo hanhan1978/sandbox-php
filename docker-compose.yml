@@ -1,0 +1,73 @@
+version: '3'
+services:
+  lb:
+    image: nginx:alpine 
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+        - "8080:80"
+    networks:
+      app:
+  php1:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php2:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php3:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php4:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php5:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php6:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php7:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php8:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php9:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+  php10:
+    build: .
+    volumes:
+      - ./prefork.php:/server.php
+    networks:
+      - app
+networks:
+  app:
